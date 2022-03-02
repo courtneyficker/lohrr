@@ -16,6 +16,22 @@ bot = commands.Bot(command_prefix = '.')
 async def on_ready():
     print('Lohrr is ready to serve.')
 
+
+initial_extensions = []
+
+for filename in os.listdir('./commands'):
+    if filename.endswith('.py'):
+        initial_extensions.append("commands." + filename[:-3])
+
+if __name__ == '__main__':
+    for extension in initial_extensions:
+        bot.load_extension(extension)
+
+
+
+
+
+
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -32,60 +48,4 @@ async def on_error(event, *args, **kwargs):
         else:
             raise
 
-
-
-@bot.command()
-async def search(ctx, *args):
-    '''
-    Performs a search on the mini database
-
-    Usage:
-        .search Gold Dragon
-    '''
-
-    term = ' '.join(args)
-    await ctx.send(f'Searching mini database for {term}...')
-
-
-@bot.command()
-async def mini(ctx, arg):
-    '''
-    Displays info about a particular mini, given its ID. Generally
-    used to display the result of a search.
-
-    Usage:
-        .mini 1138
-    '''
-    embed = discord.Embed(
-        title = 'Mini Information',
-        description = 'Info here info here info here info here info here info here',
-        color = discord.Colour.dark_blue()
-    )
-    embed.add_field(
-        name = 'Name',
-        value='Drizzt'
-    )
-    embed.add_field(
-        name = 'Set',
-        value='Icons of the Realms'
-    )
-    embed.add_field(
-        name = 'Owned',
-        value=1
-    )
-    await ctx.send(embed=embed)
-
-
-@bot.command()
-async def dotd(ctx):
-    await ctx.send("Searching for GameNerdz's Deal of the Day...")
-
 bot.run(LOHRR_TOKEN)
-
-# Message components:
-# author
-# content
-# channel
-# guild (aka server)
-# type (?)
-# flags
