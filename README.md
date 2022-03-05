@@ -1,7 +1,7 @@
 # The Lohrr bot
 
-Doesn't really do much of anything yet. Still learning.
+Still getting off the ground, but some functionality has been put in place.
 
 ## TODO:
-* GameNerdz daily sale check
+* ~GameNerdz daily sale check~ ##DONE!## Use commands ".gn" to check gamenerdz.com. Still working on coolstuffinc.com
 * Mini inventory search
