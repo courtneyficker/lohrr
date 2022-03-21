@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix = '.')
 
 @bot.event
 async def on_ready():
-    print('Lohrr is ready to serve.')
+    print('I am ready to serve, my lord.')
 
 
 initial_extensions = []
