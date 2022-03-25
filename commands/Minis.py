@@ -1,6 +1,7 @@
 from unicodedata import numeric
 import discord
 from discord.ext import commands
+from matplotlib.image import thumbnail
 import mysql.connector
 from mysql.connector import errorcode
 from os import getenv as env
@@ -135,25 +136,29 @@ class Minis(commands.Cog):
 
         # Remove list wrapper from dict
         res = result[0]
+        th = f"https://web.cecs.pdx.edu/~cficker/mini/img/{res['id']}.jpg"
 
-        embed = discord.Embed(
-            title = res['name'],
-            # title = 'name here',
-            description = 'Mini Infomation',
-            color = discord.Colour.dark_blue()
-        )
-        embed.add_field(
-            name  = 'Name',
-            value = 'Drizzt'
-        )
-        embed.add_field(
-            name  = 'Set',
-            value = res['setname']
-        )
-        embed.add_field(
-            name  = 'Owned',
-            value = res['qty']
-        )
+        embed = discord.Embed()
+        embed.title = res['name']
+        embed.description = 'Mini Infomation',
+        embed.color = discord.Colour.dark_blue()
+        embed.set_thumbnail(url=th)
+        
+        embed.add_field(name='Size', value = res['size'], inline = False)
+        embed.add_field(name='Race', value = res['race'], inline=False)
+        embed.add_field(name='Set', value=res['setname'], inline = False)
+
+        # Check for included numbers (num and total)
+        if res['num'] is None:
+            n = '[None]'
+        elif res['total'] is None:
+            n = f"{res['num']}"
+        else:
+            n = f"{res['num']}/{res['total']}"
+        
+        embed.add_field(name='Number', value=n, inline=False)
+        embed.add_field(name='Owned', value=res['qty'], inline=False)
+
         await ctx.send(embed=embed)
 
 def setup(bot):
